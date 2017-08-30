@@ -29,9 +29,6 @@ class ofApp : public ofBaseApp{
 		void gotMessage(ofMessage msg);
         void shuffle(int ary[],int size);
     
-        // ライブカメラを使用する際には、カメラ入力を準備
         ofVideoGrabber          cam;
-    
-        // オリジナルのカラー映像
-        ofxCvColorImage			colorImg;     // 切り抜いた画像を表示先
+        ofxCvColorImage			colorImg;
 };

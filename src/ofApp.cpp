@@ -1,55 +1,31 @@
 #include "ofApp.h"
 #include "ImageRoi.h"
 
-#define MOVIE_INPUT_WSIZE   480
-#define MOVIE_INPUT_HSIZE   320
-
-#define MOVIE_INPUT_WSIZE_640   640
-#define MOVIE_INPUT_HSIZE_480   480
-
-//#define ROI_WSIZE   480
-//#define ROI_HSIZE   320
 
 //--------------------------------------------------------------
 void ofApp::setup(){
     ofBackground(0, 0, 0);
     
-    
     windowWidth = ofGetWidth();
     windowHeight = ofGetHeight();
-    // 検分器は重いので検出する画像は小さくする
-    cam.initGrabber(MOVIE_INPUT_WSIZE, MOVIE_INPUT_HSIZE);
     
-    colorImg.allocate(MOVIE_INPUT_WSIZE, MOVIE_INPUT_HSIZE);
+    cam.initGrabber(640, 480);
+    colorImg.allocate(640, 480);
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
-    // カメラ入力の更新
     cam.update();
     
-    // 取り込んだフレームを画像としてキャプチャ
-    colorImg.setFromPixels(cam.getPixels(), MOVIE_INPUT_WSIZE, MOVIE_INPUT_HSIZE);
+    colorImg.setFromPixels(cam.getPixels().getData(), 640, 480);
     
-    unsigned char* pImagesPixels = colorImg.getPixels();
+    unsigned char* pImagesPixels = colorImg.getPixels().getData();
     imageroi.update(pImagesPixels);
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-    
     imageroi.draw();
-}
-
-
-//--------------------------------------------------------------
-void ofApp::shuffle(int ary[],int size){
-    for(int i=0;i<size;i++){
-        int j = rand()%size;
-        int t = ary[i];
-        ary[i] = ary[j];
-        ary[j] = t;
-    }
 }
 
 //--------------------------------------------------------------
